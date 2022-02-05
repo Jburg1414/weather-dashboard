@@ -12,7 +12,7 @@
 </head>
 <body>
     <header class="app-title">Weather Dashboard</header>
-    <main class="flex-row">
+    <main class="row">
         <div class="search col-3">
             <h3 class="search-header">Search for a City:</h3>
             <form id="city-search" class="search-body">
@@ -22,7 +22,21 @@
         </div>
 
         <div class="col-9">
+            <div class="row">
+                <div class="col-sm-12 card">
+                    <div class="card-body">
+                      <h5 class="card-title" id="city-name"></h5>
+                      <h6 class="card-subtitle mb-2 text-muted" id="current-date"></h6>
+                      <p class="card-text" id="temp"></p>
+                      <p class="card-text" id="humidity"></p>
+                      <p class="cart-text" id="wind"></p>
+                      <p class="card-text" id="uv"></p>
+                    </div>
+                  </div>
+            </div>
+            <div class="row" id="5-day-forecast">
 
+            </div>
         </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
