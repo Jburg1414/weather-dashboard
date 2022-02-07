@@ -24,7 +24,8 @@ body {
 }
 
 .search {
-    border-bottom: 2px solid var(--secondary);
+    border: none;
+    height: 150px;
 }
 
 .search-header {
@@ -42,5 +43,9 @@ body {
     width: 100%;
     text-align: center;
     background: var(--primary);
-    margin-bottom: 20px;
 }
+
+.search-history {
+    margin-top: 20px;
+}
+

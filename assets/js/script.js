@@ -15,6 +15,21 @@ var citySubmitHandler = function (event) {
         alert("Please enter a valid city name.")
     }
     console.log(city);
+
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) ?? [];
+    searchHistory.push(city);
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    console.log(localStorage);
+
+    var history = document.querySelector("#history");
+    history.innerHTML = "";
+    for (var i = 0; i < searchHistory.length; i++) {
+        var previousSearch = document.createElement("button");
+        previousSearch.type = "submit";
+        previousSearch.setAttribute("onclick", getCityInfo()); 
+        previousSearch.appendChild(document.createTextNode(searchHistory[i]));
+        history.appendChild(previousSearch);
+    }
   };
 
 // this function is using the openweather API to return information about the input city
@@ -33,9 +48,11 @@ var citySubmitHandler = function (event) {
             console.log(data);
             $("#city-name").text(data.name);
             $("#current-date").text(new Date(data.dt*1000).toLocaleDateString());
+            var image = $(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" class="card-img-top" alt="...">`);
             $("#temp").text(`Current Temperature: ${data.main.temp}℉`);
             $("#humidity").text(`Current Humidity: ${data.main.humidity}%`);
             $("#wind").text(`Current Wind Speed: ${data.wind.speed} MPH`);
+            $(".card-header").append(image);
             getCityLoc(data.coord.lon, data.coord.lat);
         }) .catch(function (error) {
             console.log(error);
@@ -56,17 +73,20 @@ var citySubmitHandler = function (event) {
             };
 
             // here we are pulling the necessary data from our response and creating a for loop to populate 
-            // the html with the information for the next 5 days
+            // the html with the information for the next 5 days.
         })  .then(function (data) {
-            // $("#uv").text(`Current UV Index: ${data.current.uvi}`);
             console.log(data);
+            $("#uv").text(`Current UV Index: ${data.current.uvi}`);
             for (i=0; i < 5; i++) {
                 var col = $("<div class='col'>");
                 var card = $("<div class='card'>");
                 var cardBody = $("<div class='card-body'>");
-                var image = $(`<img src="http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}.png" class="card-img-top" alt="...">`)
+                var image = $(`<img src="http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}.png" class="card-img-top" alt="...">`);
                 var date = $("<h5>").text(new Date(data.daily[i].dt*1000).toLocaleDateString());
-                cardBody.append(date);
+                var temp = $("<p>").text(`Temp: ${data.daily[i].temp.day}℉`);
+                var wind = $("<p>").text(`Wind: ${data.daily[i].wind_speed} MPH`);
+                var humidity = $("<p>").text(`Humidity: ${data.daily[i].humidity} %`);
+                cardBody.append(date,temp,wind,humidity);
                 card.append(image,cardBody);
                 col.append(card);
                 $("#5-day-forecast").append(col);
