@@ -16,11 +16,14 @@ var citySubmitHandler = function (event) {
     }
     console.log(city);
 
+
+    // this is where the city input is saved to local storage
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) ?? [];
     searchHistory.push(city);
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     console.log(localStorage);
 
+    // this is where the search history is brought from local storage and displayed on the webpage
     var history = document.querySelector("#history");
     history.innerHTML = "";
     for (var i = 0; i < searchHistory.length; i++) {
