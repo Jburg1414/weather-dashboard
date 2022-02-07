@@ -26,7 +26,6 @@ var citySubmitHandler = function (event) {
     for (var i = 0; i < searchHistory.length; i++) {
         var previousSearch = document.createElement("button");
         previousSearch.type = "submit";
-        previousSearch.setAttribute("onclick", getCityInfo()); 
         previousSearch.appendChild(document.createTextNode(searchHistory[i]));
         history.appendChild(previousSearch);
     }
@@ -48,7 +47,7 @@ var citySubmitHandler = function (event) {
             console.log(data);
             $("#city-name").text(data.name);
             $("#current-date").text(new Date(data.dt*1000).toLocaleDateString());
-            var image = $(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" class="card-img-top" alt="...">`);
+            var image = $(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" class="card-img" alt="...">`);
             $("#temp").text(`Current Temperature: ${data.main.temp}℉`);
             $("#humidity").text(`Current Humidity: ${data.main.humidity}%`);
             $("#wind").text(`Current Wind Speed: ${data.wind.speed} MPH`);
