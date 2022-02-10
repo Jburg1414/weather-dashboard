@@ -99,7 +99,7 @@ var citySubmitHandler = function (event) {
         })
       };
 
-
+      // this function is getting the info from the search history and applying it to the getCityInfo function
        function citySearch() {
         console.log(this);
         var city = $(this).text();
