@@ -29,6 +29,7 @@ var citySubmitHandler = function (event) {
     for (var i = 0; i < searchHistory.length; i++) {
         var previousSearch = document.createElement("button");
         previousSearch.type = "submit";
+        previousSearch.onclick = citySearch;
         previousSearch.appendChild(document.createTextNode(searchHistory[i]));
         history.appendChild(previousSearch);
     }
@@ -50,11 +51,10 @@ var citySubmitHandler = function (event) {
             console.log(data);
             $("#city-name").text(data.name);
             $("#current-date").text(new Date(data.dt*1000).toLocaleDateString());
-            var image = $(`<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" class="card-img" alt="...">`);
             $("#temp").text(`Current Temperature: ${data.main.temp}℉`);
             $("#humidity").text(`Current Humidity: ${data.main.humidity}%`);
             $("#wind").text(`Current Wind Speed: ${data.wind.speed} MPH`);
-            $(".card-header").append(image);
+            $("#current-day-image").attr("src",`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`)
             getCityLoc(data.coord.lon, data.coord.lat);
         }) .catch(function (error) {
             console.log(error);
@@ -78,6 +78,7 @@ var citySubmitHandler = function (event) {
             // the html with the information for the next 5 days.
         })  .then(function (data) {
             console.log(data);
+            $("#5-day-forecast").empty();
             $("#uv").text(`Current UV Index: ${data.current.uvi}`);
             for (i=0; i < 5; i++) {
                 var col = $("<div class='col'>");
@@ -97,5 +98,12 @@ var citySubmitHandler = function (event) {
             console.log(error);
         })
       };
+
+
+       function citySearch() {
+        console.log(this);
+        var city = $(this).text();
+        getCityInfo(city);
+       };
     
 citySearchEl.addEventListener("submit", citySubmitHandler)
